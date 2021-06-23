@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    gap: 2em;
+}
+
+.registration {
+    width: 50%;
+}
+
+.login {
+    width: 50%;
+}

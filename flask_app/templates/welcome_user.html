@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+    <title>Welcome!</title>
+</head>
+
+<body>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+        {% endwith %}
+        <h1>Welcome {{session["first_name"]}}!</h1>
+        <p>Here are the recipes</p>
+        <a href="/recipes/new">Create a Recipe</a>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Under 30 Minutes?</th>
+                <th>Actions</th>
+            </thead>
+            {% for recipe in recipes %}
+            <tr>
+                <td>{{recipe.name}}</td>
+                <td>
+                    {% if recipe.under_30 == 1 %}
+                    Yes
+                    {% elif recipe.under_30 == 0 %}
+                    No
+                    {% endif %}
+                </td>
+                <td><a href="/recipes/{{recipe.id}}">View</a>{% if session['user_id'] == recipe.user_id.id %} <a href="/recipes/{{recipe.id}}/edit">Edit</a> <a href="/recipes/{{recipe.id}}/delete">Delete</a>{% endif %}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+        <br>
+
+        <a href="/logout">Logout</a>
+    </div>
+
+</body>
+
+</html>
